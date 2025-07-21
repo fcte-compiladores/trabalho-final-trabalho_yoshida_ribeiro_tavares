@@ -1,0 +1,22 @@
+{
+  "name": "lox-interpreter",
+  "version": "1.0.0",
+  "description": "Um interpretador para a linguagem Lox implementado em JavaScript",
+  "main": "main.js",
+  "type": "module",
+  "scripts": {
+    "start": "node main.js",
+    "repl": "node main.js",
+    "test": "node main.js examples/test.lox"
+  },
+  "keywords": ["interpreter", "lox", "compiler", "javascript"],
+  "authors": [
+    "Luana Ribeiro",
+    "Gabriel Esteves", 
+    "Júlia Yoshida"
+  ],
+  "license": "MIT",
+  "engines": {
+    "node": ">=14.0.0"
+  }
+}

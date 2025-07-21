@@ -7,7 +7,11 @@ import {
   Variable,
   Assign,
   Logical,
-  Call
+  Call,
+  Get,
+  Set,
+  This,
+  Super
 } from "./Expr.js";
 import {
   Expression,
@@ -20,7 +24,7 @@ import {
   Return,
   Class
 } from "./Stmt.js";
-import ParseError from "./ParseError.js";
+import ParseError from "./ParserError.js";
 
 class Parser {
   constructor(tokens) {
@@ -31,9 +35,20 @@ class Parser {
   parse() {
     const statements = [];
     while (!this.isAtEnd()) {
-      statements.push(this.declaration());
+      const stmt = this.declaration();
+      if (stmt !== null) {
+        statements.push(stmt);
+      }
     }
     return statements;
+  }
+
+  parseExpression() {
+    try {
+      return this.expression();
+    } catch (error) {
+      return null;
+    }
   }
 
   declaration() {
@@ -225,6 +240,8 @@ class Parser {
       if (expr instanceof Variable) {
         const name = expr.name;
         return new Assign(name, value);
+      } else if (expr instanceof Get) {
+        return new Set(expr.object, expr.name, value);
       }
 
       this.error(equals, "Alvo de atribuição inválido.");
@@ -321,6 +338,9 @@ class Parser {
     while (true) {
       if (this.match(TokenType.LEFT_PAREN)) {
         expr = this.finishCall(expr);
+      } else if (this.match(TokenType.DOT)) {
+        const name = this.consume(TokenType.IDENTIFIER, "Esperado nome da propriedade após '.'.");
+        expr = new Get(expr, name);
       } else {
         break;
       }
@@ -351,6 +371,17 @@ class Parser {
 
     if (this.match(TokenType.NUMBER, TokenType.STRING)) {
       return new Literal(this.previous().literal);
+    }
+
+    if (this.match(TokenType.SUPER)) {
+      const keyword = this.previous();
+      this.consume(TokenType.DOT, "Esperado '.' após 'super'.");
+      const method = this.consume(TokenType.IDENTIFIER, "Esperado nome do método da superclasse.");
+      return new Super(keyword, method);
+    }
+
+    if (this.match(TokenType.THIS)) {
+      return new This(this.previous());
     }
 
     if (this.match(TokenType.IDENTIFIER)) {

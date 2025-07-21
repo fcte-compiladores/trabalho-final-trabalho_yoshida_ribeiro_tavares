@@ -100,6 +100,54 @@ class Call extends Expr {
   }
 }
 
+class Get extends Expr {
+  constructor(object, name) {
+    super();
+    this.object = object;
+    this.name = name;
+  }
+
+  accept(visitor) {
+    return visitor.visitGetExpr(this);
+  }
+}
+
+class Set extends Expr {
+  constructor(object, name, value) {
+    super();
+    this.object = object;
+    this.name = name;
+    this.value = value;
+  }
+
+  accept(visitor) {
+    return visitor.visitSetExpr(this);
+  }
+}
+
+class This extends Expr {
+  constructor(keyword) {
+    super();
+    this.keyword = keyword;
+  }
+
+  accept(visitor) {
+    return visitor.visitThisExpr(this);
+  }
+}
+
+class Super extends Expr {
+  constructor(keyword, method) {
+    super();
+    this.keyword = keyword;
+    this.method = method;
+  }
+
+  accept(visitor) {
+    return visitor.visitSuperExpr(this);
+  }
+}
+
 export {
   Expr,
   Binary,
@@ -109,5 +157,9 @@ export {
   Variable,
   Assign,
   Logical,
-  Call
+  Call,
+  Get,
+  Set,
+  This,
+  Super
 };

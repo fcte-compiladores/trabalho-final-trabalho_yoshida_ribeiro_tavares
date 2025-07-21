@@ -1,4 +1,4 @@
-import { Scanner } from "./Scanner.js";
+import Scanner from "./Scanner.js";
 import Parser from "./Parser.js";
 
 export function parse(tokens) {

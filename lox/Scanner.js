@@ -59,7 +59,6 @@ isAlphaNumeric(c) {
   scanToken() {
   const c = this.advance();
   switch (c) {
-    // Símbolos simples
     case '(': this.addToken(TokenType.LEFT_PAREN); break;
     case ')': this.addToken(TokenType.RIGHT_PAREN); break;
     case '{': this.addToken(TokenType.LEFT_BRACE); break;
@@ -71,13 +70,11 @@ isAlphaNumeric(c) {
     case ';': this.addToken(TokenType.SEMICOLON); break;
     case '*': this.addToken(TokenType.STAR); break;
 
-    // Operadores com dois caracteres possíveis
     case '!': this.addToken(this.match('=') ? TokenType.BANG_EQUAL : TokenType.BANG); break;
     case '=': this.addToken(this.match('=') ? TokenType.EQUAL_EQUAL : TokenType.EQUAL); break;
     case '<': this.addToken(this.match('=') ? TokenType.LESS_EQUAL : TokenType.LESS); break;
     case '>': this.addToken(this.match('=') ? TokenType.GREATER_EQUAL : TokenType.GREATER); break;
 
-    // Barra ou comentário
     case '/':
       if (this.match('/')) {
         while (this.peek() !== '\n' && !this.isAtEnd()) this.advance();
@@ -86,21 +83,17 @@ isAlphaNumeric(c) {
       }
       break;
 
-    // Espaços em branco
     case ' ':
     case '\r':
     case '\t':
       break;
 
-    // Nova linha
     case '\n':
       this.line++;
       break;
 
-    // Strings
     case '"': this.string(); break;
 
-    // Literais e identificadores
     default:
       if (this.isDigit(c)) {
         this.number();
@@ -124,7 +117,6 @@ string() {
     return;
   }
 
-  // Fechar as aspas
   this.advance();
 
   const value = this.source.substring(this.start + 1, this.current - 1);
@@ -134,7 +126,6 @@ string() {
 number() {
   while (this.isDigit(this.peek())) this.advance();
 
-  // Ponto decimal
   if (this.peek() === '.' && this.isDigit(this.peekNext())) {
     this.advance(); // Consome o ponto
 
