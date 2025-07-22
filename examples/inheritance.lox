@@ -1,0 +1,126 @@
+class Animal {
+  init(nome) {
+    this.nome = nome;
+  }
+  
+  falar() {
+    print this.nome + " faz um som";
+  }
+  
+  mover() {
+    print this.nome + " se move";
+  }
+}
+
+class Mamifero < Animal {
+  init(nome, pelo) {
+    super.init(nome);
+    this.pelo = pelo;
+  }
+  
+  amamentar() {
+    print this.nome + " está amamentando";
+  }
+  
+  falar() {
+    super.falar();
+    print this.nome + " é um mamífero";
+  }
+}
+
+class Cachorro < Mamifero {
+  init(nome, raca) {
+    super.init(nome, true);
+    this.raca = raca;
+  }
+  
+  falar() {
+    print this.nome + " late: Au au!";
+  }
+  
+  buscarBola() {
+    print this.nome + " está buscando a bola";
+  }
+}
+
+class Gato < Mamifero {
+  init(nome, cor) {
+    super.init(nome, true);
+    this.cor = cor;
+  }
+  
+  falar() {
+    print this.nome + " mia: Miau!";
+  }
+  
+  arranhar() {
+    print this.nome + " está arranhando";
+  }
+}
+
+class Passaro < Animal {
+  init(nome, podeVoar) {
+    super.init(nome);
+    this.podeVoar = podeVoar;
+  }
+  
+  falar() {
+    print this.nome + " canta";
+  }
+  
+  voar() {
+    if (this.podeVoar) {
+      print this.nome + " está voando";
+    } else {
+      print this.nome + " não pode voar";
+    }
+  }
+}
+
+print "=== Exemplo de Herança ===";
+
+var animal = Animal("Animal Genérico");
+animal.falar();
+animal.mover();
+
+print "";
+print "=== Mamíferos ===";
+var mamifero = Mamifero("Mamífero Genérico", true);
+mamifero.falar();
+mamifero.amamentar();
+
+print "";
+print "=== Cachorro ===";
+var dog = Cachorro("Rex", "Labrador");
+dog.falar();
+dog.buscarBola();
+dog.amamentar();
+dog.mover();
+
+print "";
+print "=== Gato ===";
+var cat = Gato("Mimi", "Preto");
+cat.falar();
+cat.arranhar();
+cat.amamentar();
+
+print "";
+print "=== Pássaro ===";
+var bird = Passaro("Canário", true);
+bird.falar();
+bird.voar();
+
+var penguin = Passaro("Pinguim", false);
+penguin.falar();
+penguin.voar();
+
+print "";
+print "=== Polimorfismo ===";
+var animais = nil;
+
+print "Fazendo todos os animais falarem:";
+for (var i = 0; i < 3; i = i + 1) {
+  if (i == 0) dog.falar();
+  else if (i == 1) cat.falar();
+  else bird.falar();
+}

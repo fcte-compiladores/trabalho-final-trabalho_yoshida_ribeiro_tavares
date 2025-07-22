@@ -1,0 +1,17 @@
+print "Hello, World!";
+
+var nome = "Lox";
+print "Olá, " + nome + "!";
+
+var numero1 = 10;
+var numero2 = 5;
+
+print "Soma: " + (numero1 + numero2);
+print "Subtração: " + (numero1 - numero2);
+print "Multiplicação: " + (numero1 * numero2);
+print "Divisão: " + (numero1 / numero2);
+
+print "10 > 5: " + (10 > 5);
+print "3 == 3: " + (3 == 3);
+print "true and false: " + (true and false);
+print "true or false: " + (true or false);

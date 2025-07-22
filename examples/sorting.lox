@@ -1,0 +1,88 @@
+class Lista {
+  init() {
+    this.itens = nil;
+    this.tamanho = 0;
+  }
+  
+  adicionar(valor) {
+    var novoItem = Item(valor, this.itens);
+    this.itens = novoItem;
+    this.tamanho = this.tamanho + 1;
+  }
+  
+  get(indice) {
+    if (indice >= this.tamanho) return nil;
+    
+    var atual = this.itens;
+    var pos = this.tamanho - 1 - indice;
+    
+    for (var i = 0; i < pos; i = i + 1) {
+      atual = atual.proximo;
+    }
+    
+    return atual.valor;
+  }
+  
+  set(indice, valor) {
+    if (indice >= this.tamanho) return;
+    
+    var atual = this.itens;
+    var pos = this.tamanho - 1 - indice;
+    
+    for (var i = 0; i < pos; i = i + 1) {
+      atual = atual.proximo;
+    }
+    
+    atual.valor = valor;
+  }
+  
+  imprimir() {
+    print "Lista: [";
+    for (var i = 0; i < this.tamanho; i = i + 1) {
+      print "  " + this.get(i);
+    }
+    print "]";
+  }
+}
+
+class Item {
+  init(valor, proximo) {
+    this.valor = valor;
+    this.proximo = proximo;
+  }
+}
+
+fun bubbleSort(lista) {
+  var n = lista.tamanho;
+  
+  for (var i = 0; i < n - 1; i = i + 1) {
+    for (var j = 0; j < n - i - 1; j = j + 1) {
+      if (lista.get(j) > lista.get(j + 1)) {
+        var temp = lista.get(j);
+        lista.set(j, lista.get(j + 1));
+        lista.set(j + 1, temp);
+      }
+    }
+  }
+}
+
+print "=== Exemplo de Ordenação (Bubble Sort) ===";
+
+var lista = Lista();
+lista.adicionar(64);
+lista.adicionar(34);
+lista.adicionar(25);
+lista.adicionar(12);
+lista.adicionar(22);
+lista.adicionar(11);
+lista.adicionar(90);
+
+print "Lista original:";
+lista.imprimir();
+
+bubbleSort(lista);
+
+print "\nLista ordenada:";
+lista.imprimir();
+
+print "\nTamanho da lista: " + lista.tamanho;

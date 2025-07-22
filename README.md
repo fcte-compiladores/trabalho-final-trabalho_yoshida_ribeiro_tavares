@@ -4,7 +4,7 @@
 
 ## Integrantes
 - [Luana Ribeiro](https://github.com/luanasoares0901) - [202016720]
-- [Gabriel Esteves](https://github.com/GabrielMEsteves) - [matrícula]
+- [Gabriel Esteves](https://github.com/GabrielMEsteves) - [190106956]
 - [Júlia Yoshida](https://github.com/juliaryoshida) - [200021222] 
 
 ## Introdução
@@ -96,7 +96,7 @@ O interpretador segue a arquitetura clássica de compiladores com as seguintes e
 
 1. Clone o repositório:
 ```bash
-git clone [url-do-repositorio]
+git clone [https://github.com/fcte-compiladores/trabalho-final-trabalho_yoshida_ribeiro_tavares.git]
 cd lox-interpreter
 ```
 

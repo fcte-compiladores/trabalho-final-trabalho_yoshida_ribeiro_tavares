@@ -1,0 +1,38 @@
+var global = "variável global";
+
+print "Valor inicial: " + global;
+
+{
+  var local = "variável local";
+  print "Dentro do bloco: " + local;
+  print "Global acessível: " + global;
+  
+  global = "modificada no bloco";
+  print "Global modificada: " + global;
+}
+
+print "Fora do bloco: " + global;
+
+var contador = 0;
+while (contador < 5) {
+  print "Contador: " + contador;
+  contador = contador + 1;
+}
+
+for (var i = 1; i <= 3; i = i + 1) {
+  print "Loop for: " + i;
+}
+
+var idade = 18;
+if (idade >= 18) {
+  print "Maior de idade";
+} else {
+  print "Menor de idade";
+}
+
+var x = 10;
+var y = 20;
+var temp = x;
+x = y;
+y = temp;
+print "Após troca - x: " + x + ", y: " + y;

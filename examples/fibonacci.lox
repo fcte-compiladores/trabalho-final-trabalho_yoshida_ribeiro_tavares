@@ -1,0 +1,27 @@
+fun fibonacci(n) {
+  if (n <= 1) return n;
+  return fibonacci(n - 2) + fibonacci(n - 1);
+}
+
+print "Sequência de Fibonacci:";
+for (var i = 0; i <= 10; i = i + 1) {
+  print "fib(" + i + ") = " + fibonacci(i);
+}
+
+fun fibonacciIterativo(n) {
+  if (n <= 1) return n;
+  
+  var a = 0;
+  var b = 1;
+  
+  for (var i = 2; i <= n; i = i + 1) {
+    var temp = a + b;
+    a = b;
+    b = temp;
+  }
+  
+  return b;
+}
+
+print "\nVersão iterativa:";
+print "fib(20) = " + fibonacciIterativo(20);

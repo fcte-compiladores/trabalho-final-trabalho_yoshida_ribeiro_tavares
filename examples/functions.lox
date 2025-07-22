@@ -1,0 +1,57 @@
+fun saudacao() {
+  print "Olá mundo!";
+}
+
+fun saudar(nome) {
+  print "Olá, " + nome + "!";
+}
+
+fun somar(a, b) {
+  return a + b;
+}
+
+fun multiplicar(x, y) {
+  var resultado = x * y;
+  return resultado;
+}
+
+fun fatorial(n) {
+  if (n <= 1) {
+    return 1;
+  }
+  return n * fatorial(n - 1);
+}
+
+fun criarContador() {
+  var count = 0;
+  
+  fun contar() {
+    count = count + 1;
+    return count;
+  }
+  
+  return contar;
+}
+
+print "=== Funções Básicas ===";
+saudacao();
+saudar("Alice");
+
+print "=== Funções com Retorno ===";
+var soma = somar(5, 3);
+print "5 + 3 = " + soma;
+
+var produto = multiplicar(4, 6);
+print "4 * 6 = " + produto;
+
+print "=== Função Recursiva ===";
+print "Fatorial de 5: " + fatorial(5);
+
+print "=== Closures ===";
+var contador1 = criarContador();
+var contador2 = criarContador();
+
+print "Contador 1: " + contador1();
+print "Contador 1: " + contador1();
+print "Contador 2: " + contador2();
+print "Contador 1: " + contador1();

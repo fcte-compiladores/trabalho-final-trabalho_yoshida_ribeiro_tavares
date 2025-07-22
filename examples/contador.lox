@@ -1,0 +1,138 @@
+class Contador {
+  init(valorInicial) {
+    if (valorInicial == nil) {
+      this.valor = 0;
+    } else {
+      this.valor = valorInicial;
+    }
+    this.historico = nil;
+    this.tamanhoHistorico = 0;
+  }
+  
+  incrementar(quantidade) {
+    if (quantidade == nil) {
+      quantidade = 1;
+    }
+    
+    this.adicionarAoHistorico("incrementar", quantidade);
+    this.valor = this.valor + quantidade;
+    
+    print "Contador incrementado em " + quantidade + ". Valor atual: " + this.valor;
+    return this;
+  }
+  
+  decrementar(quantidade) {
+    if (quantidade == nil) {
+      quantidade = 1;
+    }
+    
+    this.adicionarAoHistorico("decrementar", quantidade);
+    this.valor = this.valor - quantidade;
+    
+    print "Contador decrementado em " + quantidade + ". Valor atual: " + this.valor;
+    return this;
+  }
+  
+  resetar() {
+    this.adicionarAoHistorico("resetar", this.valor);
+    this.valor = 0;
+    print "Contador resetado para 0";
+    return this;
+  }
+  
+  definirValor(novoValor) {
+    this.adicionarAoHistorico("definir", this.valor);
+    this.valor = novoValor;
+    print "Contador definido para " + novoValor;
+    return this;
+  }
+  
+  obterValor() {
+    return this.valor;
+  }
+  
+  adicionarAoHistorico(operacao, valorAnterior) {
+    this.tamanhoHistorico = this.tamanhoHistorico + 1;
+    
+    if (this.tamanhoHistorico == 1) {
+      this.op1 = operacao;
+      this.val1 = valorAnterior;
+    } else if (this.tamanhoHistorico == 2) {
+      this.op2 = operacao;
+      this.val2 = valorAnterior;
+    } else if (this.tamanhoHistorico == 3) {
+      this.op3 = operacao;
+      this.val3 = valorAnterior;
+    } else if (this.tamanhoHistorico == 4) {
+      this.op4 = operacao;
+      this.val4 = valorAnterior;
+    } else if (this.tamanhoHistorico == 5) {
+      this.op5 = operacao;
+      this.val5 = valorAnterior;
+    }
+  }
+  
+  mostrarHistorico() {
+    print "=== Histórico de Operações ===";
+    if (this.tamanhoHistorico == 0) {
+      print "Nenhuma operação realizada";
+      return;
+    }
+    
+    for (var i = 1; i <= this.tamanhoHistorico and i <= 5; i = i + 1) {
+      if (i == 1) print "1. " + this.op1 + " (valor anterior: " + this.val1 + ")";
+      else if (i == 2) print "2. " + this.op2 + " (valor anterior: " + this.val2 + ")";
+      else if (i == 3) print "3. " + this.op3 + " (valor anterior: " + this.val3 + ")";
+      else if (i == 4) print "4. " + this.op4 + " (valor anterior: " + this.val4 + ")";
+      else if (i == 5) print "5. " + this.op5 + " (valor anterior: " + this.val5 + ")";
+    }
+    
+    if (this.tamanhoHistorico > 5) {
+      print "... e mais " + (this.tamanhoHistorico - 5) + " operações";
+    }
+  }
+  
+  estatisticas() {
+    print "=== Estatísticas do Contador ===";
+    print "Valor atual: " + this.valor;
+    print "Total de operações: " + this.tamanhoHistorico;
+    
+    if (this.valor > 0) {
+      print "Status: POSITIVO";
+    } else if (this.valor < 0) {
+      print "Status: NEGATIVO";
+    } else {
+      print "Status: ZERO";
+    }
+  }
+}
+
+print "=== Exemplo: Contador Avançado ===";
+
+var contador = Contador(nil);
+print "Contador criado com valor inicial: " + contador.obterValor();
+
+contador.incrementar(nil)
+        .incrementar(5)
+        .decrementar(2)
+        .incrementar(10);
+
+contador.estatisticas();
+contador.mostrarHistorico();
+
+print "";
+print "=== Testando diferentes operações ===";
+contador.definirValor(100)
+        .decrementar(25)
+        .decrementar(25)
+        .resetar()
+        .incrementar(7);
+
+contador.estatisticas();
+contador.mostrarHistorico();
+
+print "";
+print "=== Contador com valor inicial ===";
+var contador2 = Contador(50);
+contador2.incrementar(10).decrementar(5);
+contador2.estatisticas();

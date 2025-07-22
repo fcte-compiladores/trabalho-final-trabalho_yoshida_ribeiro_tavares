@@ -1,0 +1,95 @@
+class Pessoa {
+  init(nome, idade) {
+    this.nome = nome;
+    this.idade = idade;
+  }
+  
+  apresentar() {
+    print "Meu nome é " + this.nome + " e tenho " + this.idade + " anos.";
+  }
+  
+  envelhecer() {
+    this.idade = this.idade + 1;
+    print this.nome + " agora tem " + this.idade + " anos.";
+  }
+}
+
+class Contador {
+  init() {
+    this.valor = 0;
+  }
+  
+  incrementar() {
+    this.valor = this.valor + 1;
+    return this;
+  }
+  
+  decrementar() {
+    this.valor = this.valor - 1;
+    return this;
+  }
+  
+  obterValor() {
+    return this.valor;
+  }
+  
+  resetar() {
+    this.valor = 0;
+    return this;
+  }
+}
+
+class Calculadora {
+  somar(a, b) {
+    return a + b;
+  }
+  
+  subtrair(a, b) {
+    return a - b;
+  }
+  
+  multiplicar(a, b) {
+    return a * b;
+  }
+  
+  dividir(a, b) {
+    if (b == 0) {
+      print "Erro: Divisão por zero!";
+      return nil;
+    }
+    return a / b;
+  }
+}
+
+print "=== Exemplo de Classes ===";
+
+var pessoa1 = Pessoa("Alice", 25);
+var pessoa2 = Pessoa("Bob", 30);
+
+pessoa1.apresentar();
+pessoa2.apresentar();
+
+pessoa1.envelhecer();
+
+print "";
+print "=== Contador com Fluent Interface ===";
+var contador = Contador();
+print "Valor inicial: " + contador.obterValor();
+
+contador.incrementar().incrementar().incrementar();
+print "Após 3 incrementos: " + contador.obterValor();
+
+contador.decrementar().decrementar();
+print "Após 2 decrementos: " + contador.obterValor();
+
+contador.resetar();
+print "Após reset: " + contador.obterValor();
+
+print "";
+print "=== Calculadora ===";
+var calc = Calculadora();
+print "10 + 5 = " + calc.somar(10, 5);
+print "10 - 5 = " + calc.subtrair(10, 5);
+print "10 * 5 = " + calc.multiplicar(10, 5);
+print "10 / 5 = " + calc.dividir(10, 5);
+calc.dividir(10, 0);

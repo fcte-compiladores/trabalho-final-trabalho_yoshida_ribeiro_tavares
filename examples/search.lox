@@ -1,0 +1,157 @@
+class Array {
+  init() {
+    this.dados = nil;
+    this.tamanho = 0;
+    this.capacidade = 10;
+    this.inicializar();
+  }
+  
+  inicializar() {
+    // Simulação de array usando propriedades dinâmicas
+    for (var i = 0; i < this.capacidade; i = i + 1) {
+      this.setIndex(i, nil);
+    }
+  }
+  
+  setIndex(indice, valor) {
+    if (indice == 0) this.i0 = valor;
+    else if (indice == 1) this.i1 = valor;
+    else if (indice == 2) this.i2 = valor;
+    else if (indice == 3) this.i3 = valor;
+    else if (indice == 4) this.i4 = valor;
+    else if (indice == 5) this.i5 = valor;
+    else if (indice == 6) this.i6 = valor;
+    else if (indice == 7) this.i7 = valor;
+    else if (indice == 8) this.i8 = valor;
+    else if (indice == 9) this.i9 = valor;
+  }
+  
+  getIndex(indice) {
+    if (indice == 0) return this.i0;
+    else if (indice == 1) return this.i1;
+    else if (indice == 2) return this.i2;
+    else if (indice == 3) return this.i3;
+    else if (indice == 4) return this.i4;
+    else if (indice == 5) return this.i5;
+    else if (indice == 6) return this.i6;
+    else if (indice == 7) return this.i7;
+    else if (indice == 8) return this.i8;
+    else if (indice == 9) return this.i9;
+    return nil;
+  }
+  
+  adicionar(valor) {
+    if (this.tamanho < this.capacidade) {
+      this.setIndex(this.tamanho, valor);
+      this.tamanho = this.tamanho + 1;
+    }
+  }
+  
+  imprimir() {
+    print "Array: [";
+    for (var i = 0; i < this.tamanho; i = i + 1) {
+      print "  " + this.getIndex(i);
+    }
+    print "]";
+  }
+}
+
+fun buscaBinaria(array, valor) {
+  var esquerda = 0;
+  var direita = array.tamanho - 1;
+  
+  while (esquerda <= direita) {
+    var meio = esquerda + (direita - esquerda) / 2;
+    
+    // Simular floor() - converter para inteiro
+    if (meio >= esquerda + 0.5) {
+      meio = esquerda + 1;
+    } else {
+      meio = esquerda;
+    }
+    
+    // Recalcular meio corretamente
+    var distancia = direita - esquerda;
+    if (distancia >= 2) {
+      meio = esquerda + 1;
+      if (distancia >= 4) {
+        meio = esquerda + 2;
+      }
+      if (distancia >= 6) {
+        meio = esquerda + 3;
+      }
+    }
+    
+    var valorMeio = array.getIndex(meio);
+    
+    print "Verificando posição " + meio + " (valor " + valorMeio + ")";
+    
+    if (valorMeio == valor) {
+      return meio;
+    }
+    
+    if (valorMeio < valor) {
+      esquerda = meio + 1;
+    } else {
+      direita = meio - 1;
+    }
+  }
+  
+  return -1;
+}
+
+fun buscaLinear(array, valor) {
+  for (var i = 0; i < array.tamanho; i = i + 1) {
+    if (array.getIndex(i) == valor) {
+      return i;
+    }
+  }
+  return -1;
+}
+
+print "=== Exemplo de Busca Binária ===";
+
+var array = Array();
+array.adicionar(2);
+array.adicionar(5);
+array.adicionar(8);
+array.adicionar(12);
+array.adicionar(16);
+array.adicionar(23);
+array.adicionar(38);
+array.adicionar(45);
+
+print "Array ordenado:";
+array.imprimir();
+
+var valorBuscado = 23;
+print "\nBuscando valor: " + valorBuscado;
+
+print "\n--- Busca Binária ---";
+var resultadoBinario = buscaBinaria(array, valorBuscado);
+
+if (resultadoBinario != -1) {
+  print "Valor encontrado na posição: " + resultadoBinario;
+} else {
+  print "Valor não encontrado";
+}
+
+print "\n--- Busca Linear (comparação) ---";
+var resultadoLinear = buscaLinear(array, valorBuscado);
+
+if (resultadoLinear != -1) {
+  print "Valor encontrado na posição: " + resultadoLinear;
+} else {
+  print "Valor não encontrado";
+}
+
+print "\n--- Teste com valor inexistente ---";
+var valorInexistente = 20;
+print "Buscando valor: " + valorInexistente;
+var resultado = buscaBinaria(array, valorInexistente);
+
+if (resultado != -1) {
+  print "Valor encontrado na posição: " + resultado;
+} else {
+  print "Valor não encontrado (correto!)";
+}
