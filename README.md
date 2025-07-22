@@ -1,79 +1,209 @@
 [![Review Assignment Due Date](https://classroom.github.com/assets/deadline-readme-button-22041afd0340ce965d47ae6ef1cefeee28c7c493a6346c4f15d667ab976d596c.svg)](https://classroom.github.com/a/Hppw7Zh2)
-# Trabalho Final
 
-## Escopo e organização
+# Interpretador Lox
 
-O trabalho é de tema livre dentro do escopo da disciplina de compiladores e
-consiste no desenvolvimento de alguma aplicação na área da disciplina (um
-interpretador para uma linguagem simples, compilador, analisadores de código,
-etc.)
+## Integrantes
+- [Luana Ribeiro](https://github.com/luanasoares0901) - [202016720]
+- [Gabriel Esteves](https://github.com/GabrielMEsteves) - [matrícula]
+- [Júlia Yoshida](https://github.com/juliaryoshida) - [200021222] 
 
-O trabalho pode ser feito em grupos de até 4 pessoas.
+## Introdução
 
-## Estrutura
+Este projeto implementa um interpretador completo para a linguagem de programação Lox, uma linguagem dinamicamente tipada inspirada em JavaScript e Python. O interpretador foi desenvolvido em JavaScript/Node.js seguindo a arquitetura tree-walking interpreter.
 
-Os trabalhos devem ser entregues na atividade própria no [github-classrrom](...).
-Cada repositório deve ter uma estrutura parecida com a delineada abaixo:
+### Características da Linguagem Lox
 
-* **README:** o arquivo README.md na base do repositório deve descrever os
-  detalhes da implementação do código. O README deve ter algumas seções 
-  obrigatórias:
-  - **Título**: nome do projeto
-  - **Integrantes**: lista com os nomes, matrículas e turma de cada integrante.
-  - **Introdução**: deve detalhar o que o projeto implementou, quais foram as
-    estratégias e algoritmos relevantes. Se o projeto implementa uma linguagem
-    não-comum ou um subconjunto de uma linguagem comum, deve conter alguns
-    exemplos de comandos nesta linguagem, descrendo a sua sintaxe e semântica,
-    quando necessário.
-  - **Instalação**: deve detalhar os passos para instalar as dependências e
-    rodar o código do projeto. Pode ser algo simples como *"Rode
-    `uv run lox hello.lox` para executar o interpretador."*, se a linguagem de
-    implementação permitir este tipo de facilidade.
+A linguagem Lox suporta:
+- **Tipos de dados**: números (ponto flutuante), strings, booleanos e nil
+- **Variáveis**: declaração com `var` e atribuição
+- **Estruturas de controle**: `if/else`, `while`, `for`
+- **Funções**: declaração com `fun`, parâmetros e valores de retorno
+- **Classes**: orientação a objetos com herança
+- **Operadores**: aritméticos, de comparação e lógicos
 
-    Você pode usar gerenciadores de pacotes específicos de linguagens populares
-    como uv, npm, cargo, etc, containers Docker/Podman, ou `.nix`.
-  - **Exemplos**: o projeto deve conter uma pasta "exemplos" com alguns arquivos
-    na linguagem de programação implementada. Deve conter exemplos com graus
-    variáveis de complexidade. Algo como: hello world, fibonacci, função
-    recursiva, alguma estrutura de dados e para finalizar um algoritmo um pouco
-    mais elaborado como ordenamento de listas, busca binária, etc.
+### Exemplos de Sintaxe
+
+**Variáveis e Tipos:**
+```lox
+var nome = "Mundo";
+var numero = 42;
+var verdadeiro = true;
+var nada = nil;
+```
+
+**Estruturas de Controle:**
+```lox
+if (numero > 0) {
+    print "Número positivo";
+} else {
+    print "Número não positivo";
+}
+
+for (var i = 0; i < 10; i = i + 1) {
+    print i;
+}
+```
+
+**Funções:**
+```lox
+fun fibonacci(n) {
+    if (n <= 1) return n;
+    return fibonacci(n - 2) + fibonacci(n - 1);
+}
+
+print fibonacci(10);
+```
+
+**Classes e Herança:**
+```lox
+class Animal {
+    init(nome) {
+        this.nome = nome;
+    }
     
-    Note que isto é apenas um guia da ordem de dificuldade dos problemas.
-    Algumas linguagens sequer permitem a implementação de alguns dos exemplos
-    acima.
-  - **Referências**: descreva as referências que você utilizou para a
-    implementação da linguagem. Faça uma breve descrição do papel de cada
-    referência ou como ela foi usada no projeto. Caso você tenha usado algum 
-    código existente como referência, descreva as suas contribuições originais
-    para o projeto.
-  - **Estrutura do código**: faça uma descrição da estrutura geral do código
-    discutindo os módulos, classes, estruturas de dados ou funções principais. 
-    Explicite onde as etapas tradicionais de compilação (análise léxica, 
-    sintática, semântica, etc) são realizadas, quando relevante.
-  - **Bugs/Limitações/problemas conhecidos**: discuta as limitações do seu
-    projeto e problemas conhecidos e coisas que poderiam ser feitas para
-    melhorá-lo no futuro. Note: considere apenas melhorias incrementais e não
-    melhorias grandes como: "reimplementar tudo em Rust".
-* **Código:** O codigo fonte deve estar presente no repositório principal junto com
-  a declaração das suas dependências. Cada linguagem possui um mecanismo
-  específico para isso, mas seria algo como o arquivo pyproject.toml em Python
-  ou package.json no caso de Javascript.
+    falar() {
+        print this.nome + " faz um som";
+    }
+}
 
-## Critérios
+class Cachorro < Animal {
+    falar() {
+        print this.nome + " late";
+    }
+}
+```
 
-Cada trabalho começa com 100% e pode receber penalizações ou bônus de acordo com
-os critérios abaixo:
+### Estratégias e Algoritmos
 
-- Ausência do README: -50%
-- Instruções de instalação não funcionam: até -20%
-- Referências não atribuídas ou falta de referâncias: -10%
-- Código confuso ou mal organizado: até -15%
-- Falta de clareza em apresentar as técnicas e etapas de compilação: -15%
-- Bugs e limitações sérias na implementação: até -25%
-- Escopo reduzido, ou implementação insuficiente: até 25%
-- Uso de código não atribuído/plágio: até -100%
-- Repositório bem estruturado e organizado: até 10%
-- Linguagem com conceitos originais/interessantes: até +15%
-- Testes unitários: até +15%, dependendo da cobertura
+O interpretador segue a arquitetura clássica de compiladores com as seguintes etapas:
 
-Após aplicar todos os bônus, a nota é truncada no intervalo 0-100%. 
+1. **Análise Léxica** ([`Scanner`](lox/Scanner.js)): Tokenização do código fonte usando autômato finito
+2. **Análise Sintática** ([`Parser`](lox/Parser.js)): Parser recursivo descendente que gera uma AST
+3. **Interpretação** ([`Interpreter`](lox/Interpreter.js)): Tree-walking interpreter que executa a AST diretamente
+
+**Algoritmos Principais:**
+- **Tokenização**: Reconhecimento de padrões usando máquina de estados
+- **Parsing**: Precedência de operadores implementada com recursive descent
+- **Resolução de Escopo**: Ambientes encadeados para gerenciamento de variáveis
+- **Orientação a Objetos**: Implementação de classes com herança single e dynamic dispatch
+
+## Instalação
+
+### Pré-requisitos
+- Node.js versão 14.0.0 ou superior
+
+### Passos para Instalação
+
+1. Clone o repositório:
+```bash
+git clone [url-do-repositorio]
+cd lox-interpreter
+```
+
+2. Instale as dependências:
+```bash
+npm install
+```
+
+### Como Executar
+
+**Modo Interativo (REPL):**
+```bash
+npm start
+# ou
+node main.js
+```
+
+**Executar um arquivo .lox:**
+```bash
+npm run test
+# ou
+node main.js arquivo.lox
+```
+
+**Exemplo de uso:**
+```bash
+# Modo interativo
+$ npm start
+> var x = 10;
+> print x * 2;
+20
+> sair
+
+# Executar arquivo
+$ node main.js examples/fibonacci.lox
+```
+
+## Exemplos
+
+O projeto deve incluir uma pasta `examples/` com arquivos demonstrando diferentes recursos:
+
+- `hello.lox` - Hello World básico
+- `fibonacci.lox` - Sequência de Fibonacci
+- `classes.lox` - Exemplo com classes e herança
+- `loops.lox` - Estruturas de repetição
+- `functions.lox` - Declaração e uso de funções
+
+## Referências
+
+- **"Crafting Interpreters" por Robert Nystrom**: Referência principal para a arquitetura do interpretador e implementação da linguagem Lox. O livro forneceu a base teórica e prática para todas as etapas do desenvolvimento.
+
+- **"Compilers: Principles, Techniques, and Tools" (Dragon Book)**: Utilizado para conceitos fundamentais de análise léxica e sintática, especialmente para a implementação do parser recursivo descendente.
+
+### Contribuições Originais
+
+- Implementação em JavaScript/Node.js (o livro original usa Java)
+- Adição de modo REPL interativo com suporte a expressões
+- Melhorias na detecção e tratamento de erros
+- Adaptação das mensagens de erro para português
+
+## Estrutura do Código
+
+```
+main.js                 # Ponto de entrada e CLI
+package.json           # Configuração do projeto
+lox/
+├── Scanner.js         # Análise léxica (tokenização)
+├── Parser.js          # Análise sintática (AST)
+├── Interpreter.js     # Interpretação e execução
+├── Environment.js     # Gerenciamento de escopo
+├── Token.js           # Representação de tokens
+├── TokenType.js       # Definição dos tipos de tokens
+├── Keywords.js        # Palavras-chave da linguagem
+├── Expr.js            # Classes para expressões da AST
+├── Stmt.js            # Classes para statements da AST
+├── LoxFunction.js     # Implementação de funções
+├── LoxClass.js        # Implementação de classes
+├── RuntimeError.js    # Tratamento de erros de execução
+└── ParserError.js     # Tratamento de erros de parsing
+```
+
+### Etapas de Compilação
+
+1. **Análise Léxica**: Realizada em [`Scanner.js`](lox/Scanner.js) - converte código fonte em tokens
+2. **Análise Sintática**: Implementada em [`Parser.js`](lox/Parser.js) - gera árvore sintética abstrata
+3. **Interpretação**: Executada em [`Interpreter.js`](lox/Interpreter.js) - percorre e executa a AST
+
+### Estruturas de Dados Principais
+
+- **AST**: Hierarquia de classes em [`Expr.js`](lox/Expr.js) e [`Stmt.js`](lox/Stmt.js)
+- **Environment**: Gerenciamento de escopo com ambientes encadeados
+- **Token**: Representação de elementos léxicos com tipo, lexema e linha
+
+## Bugs/Limitações/Problemas Conhecidos
+
+### Limitações Atuais
+
+1. **Tratamento de Erros**: Erros de runtime param a execução abruptamente em alguns casos
+2. **Garbage Collection**: Não há coleta de lixo implementada, dependendo do GC do JavaScript
+3. **Números**: Apenas suporte a ponto flutuante, sem inteiros dedicados
+4. **Imports/Modules**: Não há sistema de módulos implementado
+
+### Melhorias Incrementais Possíveis
+
+1. **Melhor Tratamento de Erros**: Implementar recuperação de erros mais robusta no parser
+2. **Otimizações**: Adicionar otimizações básicas como constant folding
+3. **Debugging**: Adicionar suporte a breakpoints e step-by-step debugging
+4. **Mais Tipos**: Implementar arrays e dicionários nativos
+5. **Standard Library**: Expandir funções nativas (string manipulation, math functions)
+6. **Análise Estática**: Implementar verificação de tipos opcional ou warnings para variáveis não utilizadas
